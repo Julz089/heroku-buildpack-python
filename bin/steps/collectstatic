@@ -27,12 +27,15 @@ bpwatch start collectstatic  # metrics collection
 if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALLED" ]; then
     set +e
 
+    # Ensure that Django is explicitly specified in requirements.txt
+    if pip-grep -s requirements.txt django-sass-processor; then
+        puts-cmd "python $MANAGE_FILE compilescss"
+        python $MANAGE_FILE compilescss
+    fi
+
     puts-cmd "python $MANAGE_FILE collectstatic --noinput"
-
-    python $MANAGE_FILE  compilescss
-
     # Run collectstatic, cleanup some of the noisy output.
-    python $MANAGE_FILE collectstatic --noinput --traceback 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
+    python $MANAGE_FILE collectstatic --noinput --traceback -i *.scss 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
     COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
 
     set -e
