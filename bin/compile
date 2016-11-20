@@ -209,6 +209,9 @@ sub-env $BIN_DIR/steps/geo-libs
 # GDAL support.
 source $BIN_DIR/steps/gdal
 
+# Install gettext
+source $BIN_DIR/steps/gettext
+
 # Install dependencies with Pip.
 source $BIN_DIR/steps/pip-install
 
