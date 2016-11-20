@@ -27,10 +27,16 @@ bpwatch start collectstatic  # metrics collection
 if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALLED" ]; then
     set +e
 
-    # Ensure that Django is explicitly specified in requirements.txt
+    # Check if we use sass-processor
     if pip-grep -s requirements.txt django-sass-processor; then
         puts-cmd "python $MANAGE_FILE compilescss"
         python $MANAGE_FILE compilescss
+    fi
+
+    # Check if we use django-compressor
+    if pip-grep -s requirements.txt django-compressor; then
+        puts-cmd "python $MANAGE_FILE compress --force"
+        python $MANAGE_FILE compress --force
     fi
 
     puts-cmd "python $MANAGE_FILE collectstatic --noinput"
