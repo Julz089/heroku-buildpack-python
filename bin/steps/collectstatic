@@ -33,16 +33,16 @@ if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALL
         python $MANAGE_FILE compilescss
     fi
 
+    puts-cmd "python $MANAGE_FILE collectstatic --noinput"
+    # Run collectstatic, cleanup some of the noisy output.
+    python $MANAGE_FILE collectstatic --noinput --traceback -i *.scss 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
+    COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
+
     # Check if we use django-compressor
     if pip-grep -s requirements.txt django-compressor; then
         puts-cmd "python $MANAGE_FILE compress --force"
         python $MANAGE_FILE compress --force
     fi
-
-    puts-cmd "python $MANAGE_FILE collectstatic --noinput"
-    # Run collectstatic, cleanup some of the noisy output.
-    python $MANAGE_FILE collectstatic --noinput --traceback -i *.scss 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
-    COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
 
     set -e
 
