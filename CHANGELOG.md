@@ -1,5 +1,56 @@
 # Python Buildpack Changelog
 
+## 97
+
+Improved egg-link functionality.
+
+## 96
+
+Bugfix.
+
+## 95
+
+Improved output support. 
+
+## v94
+
+Improved support for PyPy.
+
+## v93
+
+Improved support for PyPy.
+
+## v92
+
+Improved cache functionality and fix egg-links regression. 
+
+## v91
+
+Bugfix, rolled back to v88.
+
+## v90
+
+Bugfix.
+
+## v89
+
+Improved cache functionality and fix egg-links regression. 
+
+## v88
+
+Fixed bug with editable pip installations. 
+
+## v87
+
+Updated default Python 2.7.13.
+
+- Python 2.7.13 uses UCS-4 build, more compatibile with linux wheels.
+- Updated setuptools to v32.1.0.
+
+## v86
+
+Refactor and multi-buildpack compatibility.
+
 ## v85
 
 Packaging fix. 
@@ -27,8 +78,8 @@ Update to library detection mechnisms (pip-pop).
 
 Updated default Python to 2.7.11.
 
-- Updated setuptools to v8.1.2.
-- Updated pip to v23.1.0.
+- Updated pip to v8.1.2.
+- Updated setuptools to v23.1.0.
 
 ## v80 (2016-04-05)
 
