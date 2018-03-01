@@ -10,6 +10,7 @@
 #   - $DISABLE_COLLECTSTATIC: disables this functionality.
 #   - $DEBUG_COLLECTSTATIC: upon failure, print out environment variables.
 
+# shellcheck source=bin/utils
 source $BIN_DIR/utils
 
 # Location of 'manage.py', if it exists.
@@ -20,7 +21,7 @@ MANAGE_FILE=${MANAGE_FILE:-fakepath}
 [ -f .heroku/collectstatic_disabled ] && DISABLE_COLLECTSTATIC=1
 
 # Ensure that Django is explicitly specified in requirements.txt
-pip-grep -s requirements.txt django Django && DJANGO_INSTALLED=1
+sp-grep -s django && DJANGO_INSTALLED=1
 
 bpwatch start collectstatic  # metrics collection
 
@@ -33,9 +34,10 @@ if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALL
         python $MANAGE_FILE compilescss
     fi
 
-    puts-cmd "python $MANAGE_FILE collectstatic --noinput"
+    puts-step "$ python $MANAGE_FILE collectstatic --noinput"
+
     # Run collectstatic, cleanup some of the noisy output.
-    python $MANAGE_FILE collectstatic --noinput --traceback -i *.scss 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
+    python "$MANAGE_FILE" collectstatic --noinput --traceback -i *.scss 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
     COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
 
     # Check if we use django-compressor
@@ -47,7 +49,7 @@ if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALL
     set -e
 
     # Display a warning if collectstatic failed.
-    [ $COLLECTSTATIC_STATUS -ne 0 ] && {
+    [ "$COLLECTSTATIC_STATUS" -ne 0 ] && {
 
         echo
         echo " !     Error while running '$ python $MANAGE_FILE collectstatic --noinput'."

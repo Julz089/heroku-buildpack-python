@@ -1,3 +1,6 @@
 *.pyc
 site
 .idea/
+.DS_Store
+
+/.envrc

@@ -1,5 +1,150 @@
 # Python Buildpack Changelog
 
+# 124
+
+Update buildpack to automatically install [dev-packages] (Pipenv) during Heroku CI builds.
+
+# 123
+
+Update gunicorn init.d script to allow overrides.
+
+# 122
+
+Update default Python to v3.6.4.
+
+# 121
+
+Update default Python to v3.6.3.
+
+# 120
+
+Use Pipenv --deploy.
+
+# 119
+
+Improvements to Pipenv support, warning on unsupported Python versions.
+
+- We now warn when a user is not using latest 2.x or 3.x Python.
+- Heroku now supports `[requires]` `python_full_version` in addition to `python_version`.
+
+# 118
+
+Improvements to Pipenv support.
+
+# 117
+
+Bug fix.
+
+# 116
+
+Vendoring improvements.
+
+- Geos libraries should work on Heroku-16 now.
+- The libffi/libmemcached vendoring step is now skipped on Heroku-16 (since they are installed in the base image).
+
+# 115
+
+Revert a pull request.
+
+- No longer using `sub_env` for `pip install` step.
+
+# 114
+
+- Bugfixes.
+
+Blacklisting `PYTHONHOME` and `PYTHONPATH` for older apps. Upgrades to nltk support.
+
+# 113
+
+Updates to Pipenv support.
+
+# 112
+
+Bugfix.
+
+- Fixed grep output bug.
+
+# 111
+
+Linting, bugfixes.
+
+# 110
+
+Update default Python to 3.6.2.
+
+# 109
+
+Update Default Python to 3.6.1, bugfixes.
+
+- Fixed automatic pip uninstall of dependencies removed from requirements.txt.
+
+# 108
+
+Fix output for collectstatic step.
+
+# 107
+
+Bugfix for C dependency installation.
+
+# 106
+
+ Don't install packages that could mess up packaging.
+
+ - The Python buildpack will automatically remove `six`, `pyparsing`, `appdirs`,
+   `setuptools`, and `distribute` from a `requirements.txt` file now, as these
+   packages are provided by the Python buildpack.
+
+ # 105
+
+ Improvements to output messaging.
+
+# 104
+
+General improvements.
+
+- Fix for Heroku CI.
+- Use `pkg_resources` to check if a distribution is installed instead of
+  parsing `requirements.txt`. ([#395][395])
+
+[395]: https://github.com/heroku/heroku-buildpack-python/pull/395
+
+## 103
+
+Bug fixes and improvements.
+
+- Fix for Pipenv.
+- Fix for Heroku CI.
+- Improve handling of WEB_CONCURRENCY when using multiple buildpacks.
+- Adjust environment variables set during the build to more closely match those in the dyno environment (DYNO is now available, STACK is not).
+- Restore the build cache prior to running bin/pre_compile.
+
+## 102
+
+Buildpack code cleanup.
+
+- Improved messaging around NLTK.
+
+## 101
+
+Updated setuptools installation method.
+
+- Improved pipenv support.
+
+## 100
+
+Preliminary pipenv support.
+
+## 99
+
+Cleanup.
+
+## 98
+
+Official NLTK support and other improvements.
+
+- Support for `nltk.txt` file for declaring corpora to be downloaded.
+- Leading zeros for auto-set WEB_CONCURRENCY.
+
 ## 97
 
 Improved egg-link functionality.
@@ -10,7 +155,7 @@ Bugfix.
 
 ## 95
 
-Improved output support. 
+Improved output support.
 
 ## v94
 
@@ -22,7 +167,7 @@ Improved support for PyPy.
 
 ## v92
 
-Improved cache functionality and fix egg-links regression. 
+Improved cache functionality and fix egg-links regression.
 
 ## v91
 
@@ -34,11 +179,11 @@ Bugfix.
 
 ## v89
 
-Improved cache functionality and fix egg-links regression. 
+Improved cache functionality and fix egg-links regression.
 
 ## v88
 
-Fixed bug with editable pip installations. 
+Fixed bug with editable pip installations.
 
 ## v87
 
@@ -53,7 +198,7 @@ Refactor and multi-buildpack compatibility.
 
 ## v85
 
-Packaging fix. 
+Packaging fix.
 
 ## v84
 
